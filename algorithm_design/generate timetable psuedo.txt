@@ -1,0 +1,64 @@
+//import lecture information with bool as one of its values
+store in variables
+
+//insert into timetable func
+insertIntoTimetable(moduleInformation, type == lec) {
+	while (moduleInfo.inserted == false) {
+		//declare variables
+		randNumForPotentialRoom 		
+
+		randNumsForInsertion [] = [0-4] [0-8]
+		while randNumForPotentialRoom is associated to a room that is not designated for the type of session
+		{
+			randNumForPotentialRoom = [0-numOfRoomsForTypeOfRoom]
+		}
+		
+		if ( timetableEntries[randNum[0]] [randNum[1]] [randNumForPotentialRoom] == null {
+
+			for (numOfAvailableLecturers.length)
+				//some array that has the value deleted from it after being searched
+				randNumForAvailableLecturers = [0-numOfLecturersOnModule where valueIsInArray]
+				if lecturer [randNumOfAvailableLecturers].available == true
+				{
+					insert moduleInformationIntoTimetable
+					moduleInfo.inserted = True
+				}
+				else {
+					deleteValueWithRandNumFromArray
+				}
+			}
+		}
+	}
+}
+			
+			
+
+//3D array [5] [9] [numRooms] created to store timetable entries 
+for (i to numOfModulesStored.length )
+	while (bool == true) {
+		randNumForModuleToBeInserted = range 0 to numOfModulesStored.length
+		
+		if module[randNum] numOfLecs > 0
+		{
+			for (numOfLecs.length)
+			{
+				insertIntoTimetable(moduleInfo, type=lec)
+			}
+		
+		if module[randNum] numOfTutorials > 0
+		{
+			for (numOfTutorials.length)
+			{
+				insertIntoTimetable(moduleInfo, type=tutorial)
+			}
+		
+		if module[randNum] numOfPrac > 0
+		{
+			for (numOfPracs.length)
+			{
+				insertIntoTimetable(moduleInfo, type=pract)
+			}
+		}
+	}
+}
+			
