@@ -30,3 +30,24 @@ def insertData():
 
 def deleteData():
     return 
+
+class ModifyData:
+    def __init__(self):
+        self.connectDb = pyscopg2.connect(
+            database = "",
+            host = "",
+            user = "",
+            password = "",
+            port = ""
+            )
+        
+        self.cursor = self.connectDb.cursor()
+    
+    def getData(self, query):
+        return 0
+    
+    def insertData(self, data):
+        return 0
+    
+    def deleteData(self, data):
+        return 0
