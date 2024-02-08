@@ -1,9 +1,9 @@
-import pyscopg2 
+import psycopg2 
 
 #creates a modify data class with connection to the database
 class ModifyData:
     def __init__(self):
-        self.connectDb = pyscopg2.connect(
+        self.connectDb = psycopg2.connect(
             database = "",
             host = "",
             user = "",
