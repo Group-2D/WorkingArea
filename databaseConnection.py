@@ -26,6 +26,8 @@ def getData():
     return
 
 def insertData():
+    #might need to split Insert Data methods into different table methods
+    #ie: Modules, Lecturers
     return
 
 def deleteData():
