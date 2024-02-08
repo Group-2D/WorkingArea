@@ -4,7 +4,7 @@ import psycopg2
 class ModifyData:
     def __init__(self):
         self.connectDb = psycopg2.connect(
-            database = "",
+            database = "timetable_gen",
             host = "",
             user = "",
             password = "",
@@ -22,6 +22,21 @@ class ModifyData:
     def insertData(self, data):
         return 0
     
+    #uses data as an array data[0] == module name
+    #enter into a box -> "Core Computing", 300, 3, 1, 0
+    def insertModuleData(self, data):
+        #check the length of the data list
+        if data.isEmpty() or data.length() > 5:
+            #check first index is a string
+            return 0
+        elif type(data[0]) != str:
+            return 0
+
+        else:        
+            self.cursor.execute(
+                "INSERT INTO Modules (data) VALUES (%s, %s, %s, %s, %s)",
+                (data[0],data[1], data[2], data[3], data[4])
+            )
     #removes selected data
     def deleteData(self, data):
         return 0
