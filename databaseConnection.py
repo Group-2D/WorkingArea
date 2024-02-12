@@ -25,18 +25,31 @@ class ModifyData:
     #uses data as an array data[0] == module name
     #enter into a box -> "Core Computing", 300, 3, 1, 0
     def insertModuleData(self, data):
-        #check the length of the data list
-        if data.isEmpty() or data.length() > 5:
-            #check first index is a string
-            return 0
-        elif type(data[0]) != str:
-            return 0
+        self.cursor.execute(
+            "INSERT INTO Modules (data) VALUES (%s, %s, %s, %s, %s)",
+            (data[0],data[1], data[2], data[3], data[4])
+        )
 
-        else:        
-            self.cursor.execute(
-                "INSERT INTO Modules (data) VALUES (%s, %s, %s, %s, %s)",
-                (data[0],data[1], data[2], data[3], data[4])
-            )
+    def insertLecturerData(self, data):
+        self.cursor.execute(
+            "INSERT INTO Lecturer (data) VALUES (%s, %s, %s,)",
+            (data[0], data[1], data[2])
+        )
+    
+    def insertRoomData(self, data):
+        
+        self.cursor.execute(
+            "INSERT INTO Room (data) VALUES (%s, %s, %s)",
+            (data[0], data[1], building_id)
+
+        )
+
+    def insertBuildingData(self, bld_name):
+        self.cursor.execute(
+            "INSERT INTO Building VALUES (%s)",
+            (bld_name)
+        )
+    
     #removes selected data
     def deleteData(self, data):
         return 0
