@@ -1,0 +1,15 @@
+
+step 1; define following variables and constraints;
+	> schedule availability
+	> list of lectures that need inserting
+	> lecturer availability
+	
+
+
+case 1; a module is inserted into the timetable, end of
+case 2; a module is inserted into the timetable. there is a full course module
+	at the same time
+case 3; a module is inserted into the timetable. there is a split practical
+	session at the same time
+case 3.a; the two sessions have no student overlap
+case 3.b; the two sessions have a student overlap
