@@ -1,0 +1,45 @@
+
+class module():
+    def __init__(self, modName):
+        self.moduleName = modName
+
+
+mondaySchedule = {
+    900 : "",
+    1000 : "",
+    1100 : "",
+    1200 : "",
+    1300 : "",
+    1400 : "",
+    1500 : "",
+    1600 : "",
+    1700 : ""
+}
+
+(tuesdaySchedule, 
+ wednesdaySchedule, 
+ thursdaySchedule, 
+ fridaySchedule) = (dict(mondaySchedule),)*4
+
+weekOrder = {
+    1 : mondaySchedule,
+    2 : tuesdaySchedule,
+    3 : wednesdaySchedule,
+    4 : thursdaySchedule,
+    5 : fridaySchedule
+}
+
+moduleList = [module("maths pract"),
+              module("comp pract"),
+              module("science pract"),
+              module("law pract"),
+              module("maths lect"),
+              module("comp lect"),
+              module("science lect"),
+              module("law lect")]
+
+
+def main():
+
+    for session in moduleList:
+        
