@@ -3,13 +3,67 @@ step 1; define following variables and constraints;
 	> schedule availability
 	> list of lectures that need inserting
 	> lecturer availability
+
 	
+expanded;
+schedule availability
+	lecture availability
+	room availability
+lectures to be added list
 
 
+schedule availability;
+	the algorithm should use the database to create a set of times that are
+	available for lectures to be inserted.
+	this should be cross referenced to a set of times that certain lecturers
+	are busy in. this will prevent inserting lectures during a professors break
+	this should also be cross referenced to a set of times that rooms are
+	occupied in.
+
+	++ THIS SCHEDULE AVAILABILITY IS FOR BEFORE THE ALGORITHM BEGINS SORTING
+	LECTURES
+
+
+lectures to be added to list;
+	the algorithm should take the modules from the database and split students
+	into groups, then assign to them each a seperate lecture
+
+
+format;
+	schedule availability; empty set of times
+	lectures to be added to list; objects stored within a list
+
+
+USE CASES FOR ALGORITHMS
 case 1; a module is inserted into the timetable, end of
 case 2; a module is inserted into the timetable. there is a full course module
 	at the same time
+	case 2.a; the module is moved to another time
 case 3; a module is inserted into the timetable. there is a split practical
 	session at the same time
-case 3.a; the two sessions have no student overlap
-case 3.b; the two sessions have a student overlap
+	case 3.a; the two sessions have no student overlap
+	case 3.b; the two sessions have a student overlap
+case 4; a module is inserted into the timetable. a professor/room is 
+	unavailable at this time
+	case 4.a; the professor/room is not related to the module
+	case 4.b; the professor/room is related to the module
+
+
+algorithm;
+- take module from list
+- use algorithm (double hashing?) to determine where to insert lecture
+- check if selected time is available using professor/room/schedule sets
+- if available = true
+	- pass
+- else
+	- loop
+- apply cases 1-4 on inserted lecture
+- if case = 1 = true
+	- insert lecture
+- else
+	- return to step 2
+- if lecture list = empty
+	- end
+- else
+	- loop
+
