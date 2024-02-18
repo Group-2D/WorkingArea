@@ -1,4 +1,5 @@
 import psycopg2 
+import dataValidation
 
 #creates a modify data class with connection to the database
 class ModifyData:
@@ -17,13 +18,18 @@ class ModifyData:
     #uses data as an array data[0] == module name
     #enter into a box -> "Core Computing", 300, 3, 1, 0
     def insertModuleData(self, data):
-        self.cursor.execute(
-            "INSERT INTO Modules (data) VALUES (%s, %s, %s, %s, %s)",
-            (data[0],data[1], data[2], data[3], data[4])
-        )
-        
-        self.commitChanges()
-        return 
+
+        if dataValidation.validateData('Module', data):
+            self.cursor.execute(
+                "INSERT INTO Modules (data) VALUES (%s, %s, %s, %s, %s)",
+                (data[0],data[1], data[2], data[3], data[4])
+            )
+            
+            self.commitChanges()
+            return 
+    
+        else:
+            return False
 
     #inserts data into the lecturer table
     def insertLecturerData(self, data):
