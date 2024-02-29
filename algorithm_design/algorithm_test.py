@@ -6,6 +6,7 @@
 # how to end the program if not spaces or availabilities can be found
 
 import random
+import time
 
 #global variables
 
@@ -89,6 +90,34 @@ def determineAvailableLecturers(module_info, availableLecturers):
         return availableLecturers
 
 
+def checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, room):
+    # 5 days, 9 hour slots
+    randDay = random.randint(0, 4) 
+    randHour = random.randint(0, 8)
+    print(randDay, randHour)
+    #time.sleep(2)
+    
+    if timetableEntries [randDay] [randHour] [randPotentialRoom] is None:
+        availableLecturers = determineAvailableLecturers(module_info, availableLecturers)
+
+        #print(availableLecturers)
+        print("Hello")
+
+        randLecturer = [random.randint(0, len(availableLecturers))]
+        
+        #figure out how lecturers can have available and unavailable times
+        for i in range(len(availableLecturers)):
+            #for i in numLecturersRequired:
+                
+                timetableEntries[randDay][randHour][randPotentialRoom] = [module_info.modName, type, randLecturer, room]
+                print(f"Room info: {room}")
+
+                if type == 'lec':
+                    studentsUnassigned = studentsUnassigned - room [2] 
+                    print(f"Students unassigned: {studentsUnassigned} ")
+
+                time.sleep(100)
+
 
 
 def insertIntoTimetable(module_info, type):
@@ -96,6 +125,8 @@ def insertIntoTimetable(module_info, type):
     studentsUnassigned = module_info.numOfStudents
     moduleInserted = False
     availableLecturers = []
+
+    print(f"{module_info.modName} {type}") 
     
     match type:
         case 'lec':
@@ -112,31 +143,20 @@ def insertIntoTimetable(module_info, type):
             randPotentialRoom = random.randint(0, len(roomsList) - 1)
 
             #checks that the room is the correct type for the sessions being assigned to
-            print(roomsList[0])
+            #print(roomsList[0])
 
             if roomsList[randPotentialRoom] [3] == type:
                 room = roomsList[randPotentialRoom]
                 correctRoomType = True 
-
-        #makes new entries in the timetable until every student has been assigned to a session
-        while studentsUnassigned > 0:
-            # 5 days, 9 hour slots
-            randDay = random.randint(0, 4) 
-            randHour = random.randint(0, 8)
-            
-            if timetableEntries [randDay] [randHour] [randPotentialRoom] is None:
-                availableLecturers = determineAvailableLecturers(module_info, availableLecturers)
-
-                print(availableLecturers)
-                print("Hello")
-
-                randLecturer = [random.randint(0, len(availableLecturers))]
-                
-                #figure out how lecturers can have available and unavailable times
-                for i in range(len(availableLecturers)):
-                    #for i in numLecturersRequired:
-                        timetableEntries[randDay][randHour][randPotentialRoom] = [module_info.modName, type, randLecturer, room]
-                
+        
+        if type == "lec":
+            checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, room)
+        
+        else:
+            #makes new entries in the timetable until every student has been assigned to a session
+            while studentsUnassigned > 0:
+                checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, room)
+                    
             
 def displayTimetable():
     for i in range(len(timetableEntries)):
@@ -147,23 +167,20 @@ def displayTimetable():
 
 
 
-def main():
-    print("hello")
 
+def main():
     #declare variables
     modulesCompleted = []
 
     #create class for the module which takes in mod information.
     createModuleClasses() 
 
-    print("hello")
-
 
     for i in range(numOfModules):
         moduleInserted = False 
 
         while moduleInserted == False:
-            randMod = random.randint(0, numOfModules) 
+            randMod = random.randint(0, numOfModules-1) 
 
             if randMod not in modulesCompleted:
                 if modules_list[randMod].lecHours > 0:
