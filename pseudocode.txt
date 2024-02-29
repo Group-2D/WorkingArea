@@ -45,3 +45,5 @@ while lecturesToInsert not empty;
     module with full class lecture overlap
     module with partial class lecture overlap, and no student overlap
     module with partial class lecture overlap, with student overlap
+
+will smells
