@@ -106,11 +106,11 @@ def determineAvailableLecturers(module_info, availableLecturers, randDay, randHo
         #print(lecturersList[2][2])
 
         #print(module_info.modName)
-        #cprint(f"i = {i}, index of list = {6}, index = {index}")
+        print(f"i = {i}, index of list = {6}, index = {index}")
 
         if module_info.modName in lecturersList [i][3] and lecturerTimetable [i] [randDay] [randHour] is None and lecturersList [i][4][index] == '0' :
             print(f"Lecturer {lecturersList [i][0]} {lecturersList [i][1]} {lecturersList [i][2]}")
-            availableLecturers.append([lecturersList[i][0], lecturersList[i][1], lecturersList[i][2]])
+            availableLecturers.append(lecturersList[i])
 
             print(index)
 
@@ -126,42 +126,31 @@ def checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, r
     randLecturers = []
     chosenLecturers = []
 
-    #print(chosenLecturers)
-
     print(randDay, randHour)
     #time.sleep(2)
     
     if timetableEntries [randDay] [randHour] [randPotentialRoom] is None:
-            
-        while studentsUnassigned > 0:
-            #finds which lecturers who teach the module can teach at the specific time.
-            availableLecturers = determineAvailableLecturers(module_info, availableLecturers, randDay, randHour)
+        #finds which lecturers who teach the module can teach at the specific time.
+        availableLecturers = determineAvailableLecturers(module_info, availableLecturers, randDay, randHour)
 
-            print(f"available lecturers: {availableLecturers}")
+        if len(availableLecturers) == 0:
+            print("No lecturers available")
 
-            #time.sleep(100)
-
-            if len(availableLecturers) == 0:
-                print("No lecturers available")
-
-                return False
-            else:
-            
+            return False
+        else:
+            while studentsUnassigned > 0:
                 #generate a random number x amount of times where x is the number of lecturers required to take each practical
                 #this will be used to pick one or more of the lecturers who are available at this time
                 for i in range(module_info.lecsRequiredForPract):
-                    randLecturers.append(random.randint(0, len(availableLecturers) - 1))
-                    print(f"Random lecs [i]: {randLecturers[i]}")
-                    chosenLecturers.append(availableLecturers[randLecturers[i]])
+                    randLecturers.append(random.randint(0, len(availableLecturers)))
+                    chosenLecturers.append(availableLecturers[randLecturers[0]][:3])
 
 
                     #randLecturers = randLecturers.append([random.randint(0, len(availableLecturers))])
                     #chosenLecturers.append(list(availableLecturers[randLecturers][:3]))
                     #chosenLecturers = chosenLecturers.append(availableLecturers [randLecturers] [0], availableLecturers [randLecturers] [1], availableLecturers [randLecturers] [2])
-                    print(f"Chosen lectuers [i]: {chosenLecturers [i]}")
+                    print(chosenLecturers [i])
                 
-                print(chosenLecturers)
-
                 #figure out how lecturers can have available and unavailable times
                 timetableEntries[randDay][randHour][randPotentialRoom] = [module_info.modName, type, chosenLecturers, room]
                 print(f"TimetableEntries {randDay} {randHour} {randPotentialRoom} = ModuleName = {module_info.modName}, type = {type}, chosenLecturers = {chosenLecturers}, room = {room}")
@@ -170,20 +159,15 @@ def checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, r
                 studentsUnassigned = studentsUnassigned - room [2] 
                 print(f"Students unassigned: {studentsUnassigned} ")
             
-                #time.sleep(10)
-            print("Session inserted")
+                time.sleep(10)
+            print("Module insertion completed")
 
-        
-        return True
+            return True
     else:
         print("No availability for this time for this room.")
 
-        #time.sleep(10)
-
         return False
-    
 
-    
 
 
 def insertIntoTimetable(module_info, type):
@@ -193,12 +177,10 @@ def insertIntoTimetable(module_info, type):
 
     print(f"{module_info.modName} {type}") 
 
-    while not moduleInserted:
+    while moduleInserted == False:
         correctRoomType = False
 
-        print("y")
-
-        while not correctRoomType:
+        while correctRoomType == False:
             randPotentialRoom = random.randint(0, len(roomsList) - 1)
 
             #checks that the room is the correct type for the sessions being assigned to
@@ -207,25 +189,9 @@ def insertIntoTimetable(module_info, type):
             if roomsList[randPotentialRoom] [3] == type:
                 room = roomsList[randPotentialRoom]
                 correctRoomType = True 
-
-                print("m")
-            
-            print("c")
         
-        print("a")
-
         moduleInserted = checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, room)
 
-    print("Module insertion completed")
-
-    #time.sleep(10)
-
-def displayTimetable():
-    for i in range(len(timetableEntries)):
-        for j in range(len(timetableEntries[i])):
-            for k in range(len(timetableEntries[i][j])):
-                if timetableEntries [i] [j] [k] is not None:
-                    print(f"Value at ({i}, {j}, {k}): {timetableEntries [i] [j] [k]}")
 
 
 def main():
@@ -237,10 +203,6 @@ def main():
 
 
     for i in range(numOfModules):
-        displayTimetable()
-
-        #time.sleep(10)
-
         moduleInserted = False 
 
         while moduleInserted == False:
@@ -249,10 +211,7 @@ def main():
             if randMod not in modulesCompleted:
                 if modules_list[randMod].lecHours > 0:
                     for i in range(lecHours [randMod]):
-                        #print(lecHours[randMod]) 
-                        #time.sleep(5)
                         insertIntoTimetable(modules_list[randMod], 'lec')
-
 
                 if modules_list[randMod].practHours > 0:
                     for i in range(practHours [randMod]):
@@ -262,7 +221,7 @@ def main():
                     for i in range(tutHours [randMod]):
                         insertIntoTimetable(modules_list[randMod], 'tut')
 
-                moduleInserted = True
+                moduleInserted == True
             
         modulesCompleted.append(randMod) 
 
@@ -270,3 +229,9 @@ def main():
     displayTimetable()
 
 main()
+
+def displayTimetable():
+    for i in range(len(timetableEntries)):
+        for j in range(len(timetableEntries[i])):
+            for k in range(len(timetableEntries[i][j])):
+                print(f"Value at ({i}, {j}, {k}): {timetableEntries [i] [j] [k]}")
