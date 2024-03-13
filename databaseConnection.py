@@ -6,10 +6,10 @@ class ModifyData:
     def __init__(self):
         self.connectDb = psycopg2.connect(
             database = "timetable_gen",
-            host = "",
-            user = "",
+            host = "127.0.0.1",
+            user = "postgres",
             password = "",
-            port = ""
+            port = "5432"
             )
         
         #cursor variable uses the connection to the db to search and modify data 
