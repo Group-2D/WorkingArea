@@ -1,16 +1,13 @@
-import databaseConnection
+from databaseManger import session
 
 
-def main():
-    session = databaseConnection
+session.dbCursor.execute(
+    """SELECT * FROM building;"""
+)
 
-    session.test()
+for row in session.dbCursor.fetchall():
+    print(row)
 
-    print(session.cursor.fetchall())
+session.dbCommit
 
-    session.cursor.close()
-
-
-#driver 
-if "__name__" == "__main__":
-    main()
+session.dbClose()
