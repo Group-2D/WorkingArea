@@ -1,6 +1,7 @@
 ### File is used to build the Postgres SQL ###
+from typing import Any
 
-def buildDatabaseSchema(dbCursor, dbCommit):
+def buildDatabaseSchema(dbCursor: Any, dbCommit: Any ) -> None:
         
         dbCursor.execute(
             """
@@ -45,7 +46,7 @@ def buildDatabaseSchema(dbCursor, dbCommit):
         dbCommit
         return 
 
-def insertDataToDb(dbCursor, dbCommit):
+def insertDataToDb(dbCursor: Any, dbCommit: Any):
     dbCursor.execute(
           """INSERT INTO building (building_name) VALUES
             ('Angelesea'),
