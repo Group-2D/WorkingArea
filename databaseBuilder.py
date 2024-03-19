@@ -1,8 +1,21 @@
 ### File is used to build the Postgres SQL ###
 from typing import Any
 
-def buildDatabaseSchema(dbCursor: Any, dbCommit: Any ) -> None:
-        
+def buildDatabaseSchema(dbCursor: Any) -> None:     
+        """
+        Used to build the database
+
+        Parameters
+        ----------
+        dbCursor: any
+            a function used to make changes to the database
+        dbCommit: any
+            a function used to commit data to the database
+
+        Returns 
+        -------
+        None
+        """
         dbCursor.execute(
             """
             CREATE TABLE IF NOT EXISTS modules(
@@ -43,10 +56,23 @@ def buildDatabaseSchema(dbCursor: Any, dbCommit: Any ) -> None:
             );
             """
         )
-        dbCommit
         return 
 
-def insertDataToDb(dbCursor: Any, dbCommit: Any):
+def insertDataToDb(dbCursor: Any):
+    """
+    Used to build the database
+
+    Parameters
+    ----------
+    dbCursor: any
+        a function used to make changes to the database
+    dbCommit: any
+        a function used to commit data to the database
+
+    Returns 
+    -------
+    None
+    """
     dbCursor.execute(
           """INSERT INTO building (building_name) VALUES
             ('Angelesea'),
@@ -60,5 +86,4 @@ def insertDataToDb(dbCursor: Any, dbCommit: Any):
             ('Lewis', 'Capaldi', 'EX009'),
             ('Katy', 'Perry', 'EX001');
         """)
-    dbCommit
     return
