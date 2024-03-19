@@ -6,5 +6,4 @@ def hash(data):
 def validate(input, data):
     return True if hash(input) == data else False
 
-test = hash("hi")
-print(validate("hi", test))
+#print(hash("password1!"))
