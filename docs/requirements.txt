@@ -1,0 +1,6 @@
+# Defininng dependices used by the project 
+
+psycopg2 == 66.0.2
+typing == 3.7.4.3
+kivy == 2.3
+
