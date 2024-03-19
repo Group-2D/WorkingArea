@@ -16,8 +16,3 @@ sphinx :
   configuration : docs/conf.py
 
 #python requirments to build the documentation
-python : 
-  intall : 
-    - requirements: docs/requirements.txt
-    method: pip
-    path: .
