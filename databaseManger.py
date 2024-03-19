@@ -6,7 +6,8 @@ from databaseBuilder import buildDatabaseSchema, insertDataToDb
 
 
 class dbManger:
-    
+    '''
+    '''
     def __init__(self) -> None:
         self.dbConnection = psycopg2.connect(
             host = "localhost",
