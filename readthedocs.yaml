@@ -17,5 +17,5 @@ sphinx :
 
 #python requirments to build the documentation
 python :
-  intall :
+  install :
     - requirements: docs/requirements.txt
