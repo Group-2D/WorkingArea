@@ -15,6 +15,7 @@
 
 import random
 import time
+from databaseManager import selectOnCondition
 
 #global variables
 
@@ -29,8 +30,8 @@ modName = ["Architecture & Operating Systems", "Comp Tutorial 4", "Core Computin
 lecHours = [1, 0, 1, 1, 1, 1] 
 practHours = [2, 0, 1, 2, 1, 2] 
 tutHours = [0, 1, 0, 0, 0, 0]
-numOfStudents = [200, 200, 200, 200, 200, 150]
-lecsRequiredForPract = [1, 1, 1, 1, 1, 1]
+studentsEnrolled = [200, 200, 200, 200, 200, 150]
+hoursRequiredForPract = [1, 1, 1, 1, 1, 1]
 
 # rooms variables
 #room name, building name, capacity, type
@@ -56,13 +57,13 @@ lecturersList = [
 modsCompleted = []
 
 class ModuleInfo:
-    def __init__(self, mod_name, lec_hours, pract_hours, tut_hours, num_of_students, lecs_required_for_pract):
+    def __init__(self, mod_name, lec_hours, pract_hours, tut_hours, students_enrolled, hours_required_for_pract):
         self.modName = mod_name
         self.lecHours = lec_hours
         self.practHours = pract_hours
         self.tutHours = tut_hours
-        self.numOfStudents = num_of_students
-        self.lecsRequiredForPract = lecs_required_for_pract
+        self.studentsEnrolled = students_enrolled
+        self.hoursRequiredForPract = hours_required_for_pract
         
 class Room:
     def __init__(self, room_name, building, room_type, capacity):
@@ -84,10 +85,10 @@ def createModuleClasses():
         lec_hours = lecHours[i]
         pract_hours = practHours[i]
         tut_hours = tutHours[i]
-        num_of_students = numOfStudents[i]
-        lecs_required_for_pract = lecsRequiredForPract [i]
+        students_enrolled = studentsEnrolled[i]
+        hours_required_for_pract = hoursRequiredForPract [i]
 
-        new_module = ModuleInfo(mod_name, lec_hours, pract_hours, tut_hours, num_of_students, lecs_required_for_pract)
+        new_module = ModuleInfo(mod_name, lec_hours, pract_hours, tut_hours, students_enrolled, hours_required_for_pract)
         modules_list.append(new_module)
 
 
@@ -128,7 +129,7 @@ def checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, r
             else:
                 #generate a random number x amount of times where x is the number of lecturers required to take each practical
                 #this will be used to pick one or more of the lecturers who are available at this time
-                for i in range(module_info.lecsRequiredForPract):
+                for i in range(module_info.hoursRequiredForPract):
                     randLecturers.append(random.randint(0, len(availableLecturers) - 1))
                     #print(f"Random lecs [i]: {randLecturers[i]}")
                     chosenLecturers.append(availableLecturers[randLecturers[i]])
@@ -153,7 +154,7 @@ def checkConstraints(module_info, type, randPotentialRoom, studentsUnassigned, r
 
 def insertIntoTimetable(module_info, type):
     room = ""
-    studentsUnassigned = module_info.numOfStudents
+    studentsUnassigned = module_info.studentsEnrolled
     moduleInserted = False
 
     #print(f"{module_info.modName} {type}") 
@@ -182,6 +183,9 @@ def displayTimetable():
             for k in range(len(timetableEntries[i][j])):
                 if timetableEntries [i] [j] [k] is not None:
                     print(f"Value at ({i}, {j}, {k}): {timetableEntries [i] [j] [k]}")
+
+                    #i represents days [0-4], [0] = Monday, [1] = Tuesday, etc
+                    #j represents days [0-4], []
 
 
 def main():
