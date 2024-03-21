@@ -61,9 +61,6 @@ class dbManger:
         self.dbCursor.execute(
             """SELECT * FROM %s """ % table
         )
-
-        for row in self.dbCursor.fetchall():
-            print(row)
         
         return
     
