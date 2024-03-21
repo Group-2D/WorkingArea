@@ -5,7 +5,7 @@ from typing import Any
 from databaseBuilder import buildDatabaseSchema, insertDataToDb
 
 
-class dbManger:
+class dbManager:
     """
     Class is used to mangage inputs and outputs from the database
 
@@ -64,7 +64,7 @@ class dbManger:
         
         return
     
-    def selectOnCondition(self, tbl_feild: str, tbl_name: str, target: str, value: Any):
+    def selectOnCondition(self, tbl_fields: list[str], tbl_name: str, target: str, value: Any):
         """
         Selects entires from a table based of a given condition
 
@@ -85,13 +85,23 @@ class dbManger:
             
         """
         # ! Error occurs: 'Composed' object is not subscriptable
-        self.dbCursor.mogrify( 
-            query = sql.SQL("select {field} from {table} where {condition} = %s").format(
-                field = sql.Identifier(tbl_feild),
+        self.dbCursor.execute(
+            sql.SQL("select {fields} from {table} where {condition} = %s").format(
+                fields = sql.SQL(',').join(
+                    sql.Identifier(n) for n in tbl_fields
+                ),
                 table = sql.Identifier(tbl_name),
-                condition = sql.Identifier(target))
+                condition = sql.Identifier(target)),
                 [value]
-        )
+            )
+
+        # self.dbCursor.mogrify( 
+        #     query = sql.SQL("select {field} from {table} where {condition} = %s").format(
+        #         field = sql.Identifier(tbl_feild),
+        #         table = sql.Identifier(tbl_name),
+        #         condition = sql.Identifier(target))
+        #         [value]
+        # )
         return self.dbCursor.fetchall()
 
     def insertIntoDb(self, tbl_name: str, tbl_cols: str, value: Any) -> None:
@@ -157,27 +167,15 @@ class dbManger:
 
         return 
 
-session = dbManger()
+session = dbManager()
 
 print(type(session.dbConnection))
 print(type(session.dbCursor))
 
 buildDatabaseSchema(session.dbCursor)
 insertDataToDb(session.dbCursor)
-'''
-session.selectAll('building')
 
-session.insertIntoDb('building', 'building_name','Libiary')
-print()
-session.selectAll('building')
-print()
 
-session.removeDataEqual('building', 'building_name', 'Park')
+print(session.selectOnCondition(["lecturer_fname", "lecturer_lname"], "lecturer", "lecturer_id", 2))
 
-session.selectAll('building')
-
-session.removeTable('building')
-
-session.dbCommit
-'''
 session.dbClose()
