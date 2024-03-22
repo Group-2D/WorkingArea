@@ -74,6 +74,8 @@ def insertDataToDb(dbCursor: Any):
     None
     """
     dbCursor.execute(
+          
+
           """INSERT INTO building (building_name) VALUES
             ('Angelesea'),
             ('Liongate'),
