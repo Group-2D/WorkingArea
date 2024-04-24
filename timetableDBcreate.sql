@@ -39,6 +39,12 @@ CREATE TABLE lecture (
 	lecture_end DECIMAL
 );
 
+CREATE TABLE lect_mod (
+	mod_id INT NOT NULL REFERENCES modules(mod_id), 
+	lecturer_id INT NOT NULL REFERENCES lecturer(lecturer_id), 
+	PRIMARY KEY(mod_id, lecturer_id)
+);
+
 CREATE TABLE saveData (
 	save_id SERIAL PRIMARY KEY,
 	save_data VARCHAR(255) NOT NULL,
